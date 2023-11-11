@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "Linking.Monitor JSON schema",
+    "title": "Winter.Monitor JSON schema",
     "type": "object",
     "properties": {
         "Monitor": {
