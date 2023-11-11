@@ -87,7 +87,7 @@ sudo ./Winter.Monitor logs filter="key words" // 控制台输出服务的日志
 
 ```JSON
 {
-    "$schema": "https://raw.githubusercontent.com/applebananamilk/Winter.Monitor/master/monitor-schemas/monitor-schema-v1.0.json"
+    "$schema": "https://raw.githubusercontent.com/applebananamilk/winter.monitor/main/schemas/monitor-schema-v1.0.json"
 }
 ```
 
@@ -296,7 +296,7 @@ sudo ./Winter.Monitor logs filter="key words" // 控制台输出服务的日志
 
 ```json
 {
-  "$schema": "https://raw.githubusercontent.com/applebananamilk/Winter.Monitor/master/monitor-schemas/monitor-schema-v1.0.json",
+  "$schema": "https://raw.githubusercontent.com/applebananamilk/winter.monitor/main/schemas/monitor-schema-v1.0.json",
   "Monitor": {
     "ServerName": "",
     "PollingIntervalInSeconds": 10,
