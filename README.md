@@ -2,6 +2,8 @@
 
 编写 `JSON` 进行配置的单体监控告警工具，适用于少量监控项+服务器资源少的情景。
 
+支持钉钉机器人、邮箱等通知方式。
+
 ### 支持的监控项
 
 - [系统](#系统监控配置)
@@ -257,6 +259,15 @@ sudo ./Winter.Monitor logs filter="key words" // 控制台输出服务的日志
             "Webhook": "",
             "AtMobiles": [],
             "IsAtAll": false
+        },
+        "Email": {
+            "IsEnabled": false,
+            "Host": "",
+            "Port": 465,
+            "UserName": "",
+            "Password": "",
+            "EnableSsl": true,
+            "ReceiveEmails": ""
         }
     }
 }
