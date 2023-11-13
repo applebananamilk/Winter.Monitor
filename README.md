@@ -247,7 +247,7 @@ sudo ./Winter.Monitor logs filter="key words" // 控制台输出服务的日志
 
 #### 通知配置
 
-支持多渠道接收通知，但目前只实现了钉钉机器人的方式。
+支持多渠道接收通知，但目前只实现了钉钉机器人、邮箱的方式。
 
 ```json
 {
@@ -268,6 +268,14 @@ sudo ./Winter.Monitor logs filter="key words" // 控制台输出服务的日志
     - Webhook : Webhook地址，为空不会发送。
     - AtMobiles : 被@的人的手机号。
     - IsAtAll : 是否@所有人。
+  - Email : 邮箱配置。
+    - IsEnabled : 是否启用。
+    - Host : 发送邮件服务器。
+    - Port : 端口号。
+    - UserName : 一般是邮箱完整的地址。
+    - Password : 一般是生成的**授权码**。
+    - EnableSsl : 是否启用SSL。
+    - ReceiveEmails : 接收邮箱地址，多个使用英文逗号分割”，“。
 
 #### 定时报告配置
 
