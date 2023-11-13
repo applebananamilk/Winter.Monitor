@@ -10,6 +10,7 @@ using Winter.Monitor.BackgroundWorks;
 using Winter.Monitor.HealthChecks.Data;
 using Winter.Monitor.HealthChecks.Extensions;
 using Winter.Monitor.Notifications.DingTalkRobot;
+using Winter.Monitor.Notifications.Email;
 
 namespace Winter.Monitor;
 
@@ -25,6 +26,7 @@ public class WinterMonitorModule : AbpModule
 
         // Notifications
         Configure<DingTalkRobotOptions>(configuration.GetSection("Notifications:DingTalkRobot"));
+        Configure<EmailOptions>(configuration.GetSection("Notifications:Email"));
 
         // Periodic Reporting
         Configure<PeriodicReportingWorkerOptions>(configuration.GetSection("PeriodicReportingWorker"));
