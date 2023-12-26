@@ -87,25 +87,25 @@ public static class HealthCheckServiceCollectionExtensions
             {
                 case "MySQL":
                     builder.AddMySql(
-                        database.ConnectionString,
+                        connectionString: database.ConnectionString,
                         HealthCheckHelper.CalculateName("DB", database.Name),
                         timeout: HealthCheckHelper.ToTimeSpan(database.WarningThreshold?.Timeout));
                     break;
                 case "Redis":
                     builder.AddRedis(
-                        database.ConnectionString,
-                        HealthCheckHelper.CalculateName("DB", database.Name),
+                        redisConnectionString: database.ConnectionString,
+                        name: HealthCheckHelper.CalculateName("DB", database.Name),
                         timeout: HealthCheckHelper.ToTimeSpan(database.WarningThreshold?.Timeout));
                     break;
                 case "SqlServer":
                     builder.AddSqlServer(
-                        database.ConnectionString,
-                        HealthCheckHelper.CalculateName("DB", database.Name),
+                        connectionString: database.ConnectionString,
+                        name: HealthCheckHelper.CalculateName("DB", database.Name),
                         timeout: HealthCheckHelper.ToTimeSpan(database.WarningThreshold?.Timeout));
                     break;
                 case "MongoDB":
                     builder.AddMongoDb(
-                        database.ConnectionString,
+                        mongodbConnectionString: database.ConnectionString,
                         name: HealthCheckHelper.CalculateName("DB", database.Name),
                         timeout: HealthCheckHelper.ToTimeSpan(database.WarningThreshold?.Timeout));
                     break;
