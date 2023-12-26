@@ -195,7 +195,7 @@ sudo ./Winter.Monitor logs filter="key words" // 控制台输出服务的日志
 
 - Name：名称，数据库监控配置内唯一，非空。
 - ConnectionString : 连接字符串，非空。
-- DbType : 数据库类型，非空。
+- DbType : 数据库类型，非空。支持：`MySQL`，`Redis`，`SqlServer`，`MongoDB`。
 - WarningThreshold ：告警阈值。
   - Timeout : 超时时间（毫秒）。
 
