@@ -4,7 +4,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Winter.Monitor.HealthChecks.Implements;
 
@@ -25,6 +24,7 @@ public class RedisHealthCheck : IHealthCheck
             if (!_connections.TryGetValue(_redisConnectionString, out var connection))
             {
                 connection = new RedisClient(_redisConnectionString);
+                _connections[_redisConnectionString] = connection;
             }
 
             connection.Ping();
