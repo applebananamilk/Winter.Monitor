@@ -37,7 +37,7 @@
 
 ### 使用
 
-你可以通过克隆此仓库，运行 `tools\Pulish-And-CompressToZip.ps1` 脚本进行发布，发布之后选择需要的压缩包。
+你可以通过克隆此仓库，运行 `tools\Publish-And-CompressToZip.ps1` 脚本进行发布，发布之后选择需要的压缩包。
 
 也可以下载已发布的压缩包进行使用。
 
