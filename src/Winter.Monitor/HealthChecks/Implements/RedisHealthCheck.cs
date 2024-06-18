@@ -42,11 +42,11 @@ public class RedisHealthCheck : IHealthCheck
         try
         {
             string redisMemoryInfo = connection.Info("Memory");
-            int memoryIndex = redisMemoryInfo.IndexOf("used_memory", StringComparison.Ordinal);
+            int memoryIndex = redisMemoryInfo.IndexOf("used_memory_human", StringComparison.Ordinal);
             if (memoryIndex >= 0)
             {
                 int firstNewLineIndex = redisMemoryInfo.IndexOf(Environment.NewLine, memoryIndex, StringComparison.Ordinal);
-                return redisMemoryInfo[memoryIndex..firstNewLineIndex] + "bytes";
+                return redisMemoryInfo[memoryIndex..firstNewLineIndex];
             }
         }
         catch (Exception)
