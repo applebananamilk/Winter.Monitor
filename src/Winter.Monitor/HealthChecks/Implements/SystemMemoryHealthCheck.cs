@@ -81,7 +81,7 @@ public class SystemMemoryHealthCheck : IHealthCheck
             return Task.FromResult(
                 new HealthCheckResult(
                     context.Registration.FailureStatus,
-                    description: $"内存触发告警阈值[{_maximumUsedMemoryPercentage}%]，已使用[{usedGB}/{totalGB}]GB。"));
+                    description: $"内存触发告警阈值[{_maximumUsedMemoryPercentage}%]，当前[{usedGB}/{totalGB}]GB。"));
         }
 
         return Task.FromResult(HealthCheckResult.Healthy($"当前[{usedGB}/{totalGB}]GB。"));
