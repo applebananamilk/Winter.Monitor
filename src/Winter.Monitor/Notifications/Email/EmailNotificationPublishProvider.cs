@@ -20,6 +20,11 @@ public class EmailNotificationPublishProvider : INotificationPublishProvider
 
     public async Task PublishAsync(string content, CancellationToken cancellationToken = default)
     {
+        if (!_options.IsEnabled)
+        {
+            return;
+        }
+
         using (var client = await BuildClientAsync())
         {
             var message = new MimeMessage();
@@ -40,7 +45,7 @@ public class EmailNotificationPublishProvider : INotificationPublishProvider
             message.Body = new TextPart(TextFormat.Plain) { Text = content };
 
             await client.SendAsync(message);
-            await client.DisconnectAsync(true);
+            await client.DisconnectAsync(true, cancellationToken);
         }
     }
 
