@@ -24,19 +24,19 @@ public class WinterMonitorModule : AbpModule
     {
         var configuration = context.Services.GetConfiguration();
 
-        // Notifications
+        // 通知
         Configure<DingTalkRobotOptions>(configuration.GetSection("Notifications:DingTalkRobot"));
         Configure<EmailOptions>(configuration.GetSection("Notifications:Email"));
 
-        // Periodic Reporting
+        // 定时报告
         Configure<PeriodicReportingWorkerOptions>(configuration.GetSection("PeriodicReportingWorker"));
 
         context.Services.AddHttpClient();
 
-        // 健康检查监视器相关服务
+        // 加载健康检查监视器相关服务
         context.Services.AddHealthChecksMonitor();
 
-        // Sqlite
+        // 使用Sqlite存储
         context.Services.AddSqlite<WinterMonitorDbContext>("Data Source=winter_monitor.db");
 
         // 取消自动注册后台任务。
@@ -52,7 +52,6 @@ public class WinterMonitorModule : AbpModule
             await context.AddBackgroundWorkerAsync<PeriodicReportingWorker>();
         }
 
-        // 自动创建数据库
         using (var serviceScope = context.ServiceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
         {
             var dbContext = serviceScope.ServiceProvider.GetRequiredService<WinterMonitorDbContext>();

@@ -66,7 +66,7 @@ internal static class HealthCheckHelper
 
         foreach (var entry in entries)
         {
-            int index = entry.Key.IndexOf(GroupSeparator);
+            int index = entry.Key.IndexOf(GroupSeparator, StringComparison.Ordinal);
 
             string groupName = "Others";
             if (index != -1)

@@ -14,10 +14,12 @@ internal sealed class Program
 {
     public static async Task<int> Main(string[] args)
     {
-        using var _ = new Mutex(false, "Winter.Monitor", out bool createdNew);
+        string appName = "Winter.Monitor";
+
+        using var _ = new Mutex(false, appName, out bool createdNew);
         if (!createdNew)
         {
-            await Console.Out.WriteLineAsync("Winter.Monitor 已启动！");
+            await Console.Out.WriteLineAsync($"{appName} 已启动！");
             await Task.Delay(1000);
             return 1;
         }
@@ -43,12 +45,12 @@ internal sealed class Program
             };
             serviceOptions.Linux.Service.Restart = "always";
             serviceOptions.Linux.Service.RestartSec = "10";
-            serviceOptions.Windows.DisplayName = "Winter.Monitor";
+            serviceOptions.Windows.DisplayName = appName;
             serviceOptions.Windows.FailureActionType = WindowsServiceActionType.Restart;
 
-            if (Service.UseServiceSelf(args, "Winter.Monitor", serviceOptions))
+            if (Service.UseServiceSelf(args, appName, serviceOptions))
             {
-                Log.Information("Starting Winter.Monitor.");
+                Log.Information($"Starting {appName}.");
 
                 var builder = Host
                  .CreateDefaultBuilder(args)
@@ -75,7 +77,7 @@ internal sealed class Program
         }
         catch (Exception ex)
         {
-            Log.Fatal(ex, "Winter.Monitor terminated unexpectedly!");
+            Log.Fatal(ex, $"{appName} terminated unexpectedly!");
             return 1;
         }
         finally
