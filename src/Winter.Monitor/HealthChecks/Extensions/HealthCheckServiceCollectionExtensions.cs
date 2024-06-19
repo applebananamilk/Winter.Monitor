@@ -71,13 +71,22 @@ public static class HealthCheckServiceCollectionExtensions
         services.TryAddSingleton<IHealthCheckPublisher, HealthCheckPublisher>();
 
         // System
-        builder.AddSystemDiskHealthCheck(monitorOptions.SystemSetting.WarningThreshold.Disk, HealthCheckHelper.CalculateName("OS", "Disk"));
-        builder.AddSystemMemoryHealthCheck(monitorOptions.SystemSetting.WarningThreshold.Memory, HealthCheckHelper.CalculateName("OS", "Memory"));
+        builder.AddSystemDiskHealthCheck(
+            monitorOptions.SystemSetting.WarningThreshold.Disk,
+            HealthCheckHelper.CalculateHealthCheckName(HealthCheckHelper.Group.OS, "Disk")
+            );
+        builder.AddSystemMemoryHealthCheck(
+            monitorOptions.SystemSetting.WarningThreshold.Memory,
+            HealthCheckHelper.CalculateHealthCheckName(HealthCheckHelper.Group.OS, "Memory")
+            );
 
         // Process
         foreach (var processSetting in monitorOptions.SystemSetting.ProcessSettings)
         {
-            builder.AddSystemProcessHealthCheck(processSetting.ProcessName, HealthCheckHelper.CalculateName("Process", processSetting.ProcessName));
+            builder.AddSystemProcessHealthCheck(
+                processSetting.ProcessName,
+                HealthCheckHelper.CalculateHealthCheckName(HealthCheckHelper.Group.Process, processSetting.ProcessName)
+                );
         }
 
         // Database
@@ -88,25 +97,25 @@ public static class HealthCheckServiceCollectionExtensions
                 case "MySQL":
                     builder.AddMySql(
                         connectionString: database.ConnectionString,
-                        HealthCheckHelper.CalculateName("DB", database.Name),
+                        name: HealthCheckHelper.CalculateHealthCheckName(HealthCheckHelper.Group.DB, database.Name),
                         timeout: HealthCheckHelper.ToTimeSpan(database.WarningThreshold?.Timeout));
                     break;
                 case "Redis":
                     builder.AddRedis(
                         redisConnectionString: database.ConnectionString,
-                        name: HealthCheckHelper.CalculateName("DB", database.Name),
+                        name: HealthCheckHelper.CalculateHealthCheckName(HealthCheckHelper.Group.DB, database.Name),
                         timeout: HealthCheckHelper.ToTimeSpan(database.WarningThreshold?.Timeout));
                     break;
                 case "SqlServer":
                     builder.AddSqlServer(
                         connectionString: database.ConnectionString,
-                        name: HealthCheckHelper.CalculateName("DB", database.Name),
+                        name: HealthCheckHelper.CalculateHealthCheckName(HealthCheckHelper.Group.DB, database.Name),
                         timeout: HealthCheckHelper.ToTimeSpan(database.WarningThreshold?.Timeout));
                     break;
                 case "MongoDB":
                     builder.AddMongoDb(
                         mongodbConnectionString: database.ConnectionString,
-                        name: HealthCheckHelper.CalculateName("DB", database.Name),
+                        name: HealthCheckHelper.CalculateHealthCheckName(HealthCheckHelper.Group.DB, database.Name),
                         timeout: HealthCheckHelper.ToTimeSpan(database.WarningThreshold?.Timeout));
                     break;
                 default:
@@ -120,7 +129,7 @@ public static class HealthCheckServiceCollectionExtensions
             builder.AddPingHealthCheck(
                 options =>
                     options.AddHost(pingSetting.Host, pingSetting.WarningThreshold!.Timeout),
-                    HealthCheckHelper.CalculateName("Ping", pingSetting.Name),
+                    name: HealthCheckHelper.CalculateHealthCheckName(HealthCheckHelper.Group.Ping, pingSetting.Name),
                     timeout: HealthCheckHelper.ToTimeSpan(pingSetting.WarningThreshold?.Timeout));
         }
 
@@ -130,7 +139,7 @@ public static class HealthCheckServiceCollectionExtensions
             builder.AddTcpHealthCheck(
                 options =>
                     options.AddHost(tcpSetting.Host, tcpSetting.Port),
-                    HealthCheckHelper.CalculateName("Tcp", tcpSetting.Name),
+                    name: HealthCheckHelper.CalculateHealthCheckName(HealthCheckHelper.Group.Tcp, tcpSetting.Name),
                     timeout: HealthCheckHelper.ToTimeSpan(tcpSetting.WarningThreshold?.Timeout));
         }
 

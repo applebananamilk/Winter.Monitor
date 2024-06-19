@@ -8,6 +8,15 @@ namespace Winter.Monitor.HealthChecks;
 
 internal static class HealthCheckHelper
 {
+    internal static class Group
+    {
+        public const string OS = "OS";
+        public const string Process = "Process";
+        public const string DB = "DB";
+        public const string Ping = "Ping";
+        public const string Tcp = "Tcp";
+    }
+
     /// <summary>
     /// 转时间段。
     /// </summary>
@@ -15,7 +24,7 @@ internal static class HealthCheckHelper
     /// <returns></returns>
     public static TimeSpan? ToTimeSpan(int? milliseconds)
     {
-        if (milliseconds.HasValue)
+        if (milliseconds.HasValue && milliseconds >= 0)
         {
             return TimeSpan.FromMilliseconds(milliseconds.Value);
         }
@@ -29,17 +38,35 @@ internal static class HealthCheckHelper
     public const char GroupSeparator = '@';
 
     /// <summary>
-    /// 计算名称。
+    /// 计算健康检查项名称。
     /// </summary>
     /// <param name="groupName">分组命名。</param>
     /// <param name="name">名称。</param>
     /// <returns></returns>
-    public static string CalculateName(string groupName, string name)
+    public static string CalculateHealthCheckName(string groupName, string name)
     {
         Check.NotNullOrEmpty(groupName, nameof(groupName));
         Check.NotNullOrEmpty(name, nameof(name));
 
         return groupName + GroupSeparator + name;
+    }
+
+    public static (string? GroupName, string Name) ResolveHealthCheckName(string healthCheckName)
+    {
+        Check.NotNullOrEmpty(healthCheckName, nameof(healthCheckName));
+
+        int index = healthCheckName.IndexOf(GroupSeparator, StringComparison.Ordinal);
+
+        string? groupName = null;
+
+        if (index != -1)
+        {
+            groupName = healthCheckName[..index];
+        }
+
+        string name = healthCheckName[(index + 1)..];
+
+        return (groupName, name);
     }
 
     /// <summary>
@@ -66,17 +93,13 @@ internal static class HealthCheckHelper
 
         foreach (var entry in entries)
         {
-            int index = entry.Key.IndexOf(GroupSeparator, StringComparison.Ordinal);
-
-            string groupName = "Others";
-            if (index != -1)
+            (string? groupName, string name) = ResolveHealthCheckName(entry.Key);
+            if (string.IsNullOrEmpty(groupName))
             {
-                groupName = entry.Key[..index];
+                groupName = "Others";
             }
-            string checkEntryName = entry.Key[(index + 1)..];
-
             var items = groupReportDictionary.GetOrAdd(groupName, () => new List<string>());
-            items.Add($"   - {checkEntryName}");
+            items.Add($"   - {name}");
             items.Add($"      HealthStatus : {entry.Value.Status} {HealthStatusEmojiMap[entry.Value.Status]}");
             if (!string.IsNullOrEmpty(entry.Value.Description))
             {
