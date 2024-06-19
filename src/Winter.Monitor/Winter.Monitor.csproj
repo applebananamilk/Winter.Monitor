@@ -15,7 +15,7 @@
 	<PropertyGroup>
 		<PublishTrimmed>True</PublishTrimmed>
 		<TrimMode>partial</TrimMode>
-		<InvariantGlobalization>true</InvariantGlobalization>
+		<SatelliteResourceLanguages>zh-Hans</SatelliteResourceLanguages>
 		<EnableTrimAnalyzer>false</EnableTrimAnalyzer>
 	</PropertyGroup>
 
