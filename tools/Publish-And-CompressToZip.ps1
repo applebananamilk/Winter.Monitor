@@ -41,18 +41,18 @@ if (Test-Path -path $pulishRootFolder) {
 }
 
 foreach ($targetRuntime in $targetRuntimes) {
-    $pulishTargetFolder = Join-Path $pulishRootFolder "$targetRuntime-v$version"
+    $publishTargetFolder = Join-Path $pulishRootFolder "$targetRuntime-v$version"
 
     Write-Info "发布 $targetRuntime"
 
     # 发布
-    dotnet publish -c Release -r $targetRuntime -o $pulishTargetFolder --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true /p:IncludeNativeLibrariesForSelfExtract=true
+    dotnet publish -c Release -r $targetRuntime -o $publishTargetFolder --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
 
     # 压缩文件夹
-    Compress-Archive -Path $pulishTargetFolder -DestinationPath "$pulishTargetFolder.zip"
+    Compress-Archive -Path $publishTargetFolder -DestinationPath "$publishTargetFolder.zip"
 
     # 删除发布文件夹
-    Remove-Item -path $pulishTargetFolder -Recurse -Force
+    Remove-Item -path $publishTargetFolder -Recurse -Force
 }
 
 Write-Info "发布结束 :)"
