@@ -89,7 +89,7 @@ sudo ./Winter.Monitor logs filter="key words" // 控制台输出服务的日志
 
 ```JSON
 {
-    "$schema": "https://raw.githubusercontent.com/applebananamilk/winter.monitor/main/schemas/monitor-schema-v1.0.json"
+    "$schema": "https://raw.githubusercontent.com/applebananamilk/winter.monitor/main/schemas/monitor-schema-v2.0.json"
 }
 ```
 
