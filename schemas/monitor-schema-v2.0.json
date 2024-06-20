@@ -13,8 +13,8 @@
                 },
                 "PollingIntervalInSeconds": {
                     "type": "number",
-                    "description": "轮询间隔，单位秒，默认值10。",
-                    "minimum": 10,
+                    "description": "轮询间隔，单位秒，默认值5。",
+                    "minimum": 5,
                     "maximum": 2147483647
                 },
                 "AlarmSetting": {
@@ -268,6 +268,40 @@
                         "IsAtAll": {
                             "type": "boolean",
                             "description": "是否@所有人。"
+                        }
+                    }
+                },
+                "Email": {
+                    "type": "object",
+                    "description": "邮件通知配置。",
+                    "properties": {
+                        "IsEnabled": {
+                            "type": "boolean",
+                            "description": "是否启用。"
+                        },
+                        "Host": {
+                            "type": "string",
+                            "description": "发送邮件服务器。"
+                        },
+                        "Port": {
+                            "type": "number",
+                            "description": "端口号。"
+                        },
+                        "UserName": {
+                            "type": "string",
+                            "description": "一般是邮箱完整的地址。"
+                        },
+                        "Password": {
+                            "type": "string",
+                            "description": " 一般是生成的授权码。"
+                        },
+                        "EnableSsl": {
+                            "type": "boolean",
+                            "description": "是否启用SSL。"
+                        },
+                        "ReceiveEmails": {
+                            "type": "string",
+                            "description": "接收邮箱地址，多个使用英文逗号分割”，“。"
                         }
                     }
                 }
