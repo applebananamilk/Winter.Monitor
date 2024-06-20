@@ -1,0 +1,296 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Winter.Monitor JSON schema",
+    "type": "object",
+    "properties": {
+        "Monitor": {
+            "type": "object",
+            "description": "监控相关配置。",
+            "properties": {
+                "ServerName": {
+                    "type": "string",
+                    "description": "服务器名称，默认是计算机名称。"
+                },
+                "PollingIntervalInSeconds": {
+                    "type": "number",
+                    "description": "轮询间隔，单位秒，默认值10。",
+                    "minimum": 10,
+                    "maximum": 2147483647
+                },
+                "AlarmSetting": {
+                    "type": "object",
+                    "description": "告警设置。",
+                    "properties": {
+                        "RecoveryNotification": {
+                            "type": "object",
+                            "description": "恢复通知设置。",
+                            "properties": {
+                                "IsEnabled": {
+                                    "type": "boolean",
+                                    "description": "是否启用，默认启用。"
+                                }
+                            }
+                        },
+                        "Convergence": {
+                            "type": "object",
+                            "description": "告警收敛设置。",
+                            "properties": {
+                                "IsEnabled": {
+                                    "type": "boolean",
+                                    "description": "是否启用，默认启用。"
+                                },
+                                "EvalInterval": {
+                                    "type": "number",
+                                    "description": "重复告警收敛周期（秒），默认600。",
+                                    "minimum": 30,
+                                    "maximum": 2147483647
+                                }
+                            }
+                        },
+                        "Silence": {
+                            "type": "object",
+                            "description": "告警静默设置。",
+                            "properties": {
+                                "IsEnabled": {
+                                    "type": "boolean",
+                                    "description": "是否启用，默认关闭。"
+                                },
+                                "MatchAll": {
+                                    "type": "boolean",
+                                    "description": "是否对所有检查项生效，默认启用。"
+                                },
+                                "HealthCheckNames": {
+                                    "type": "array",
+                                    "description": "生效检查名字，格式为分组@检查名字，例如：OS@Disk、Process@DingTalk。",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "PeriodStart": {
+                                    "type": "string",
+                                    "description": "静默时段开始，默认值0:00。"
+                                },
+                                "PeriodEnd": {
+                                    "type": "string",
+                                    "description": "静默时段结束，默认值0:00。"
+                                }
+                            }
+                        }
+                    }
+                },
+                "SystemSetting": {
+                    "type": "object",
+                    "description": "系统监控设置。",
+                    "properties": {
+                        "ProcessSettings": {
+                            "type": "array",
+                            "description": "进程监控设置。",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "ProcessName": {
+                                        "type": "string",
+                                        "description": "进程名称。",
+                                        "minLength": 1
+                                    }
+                                },
+                                "required": [
+                                    "ProcessName"
+                                ]
+                            }
+                        },
+                        "WarningThreshold": {
+                            "type": "object",
+                            "description": "告警阈值。",
+                            "properties": {
+                                "Disk": {
+                                    "type": "number",
+                                    "description": "磁盘，百分比。",
+                                    "minimum": 1,
+                                    "maximum": 100
+                                },
+                                "Memory": {
+                                    "type": "number",
+                                    "description": "内存，百分比。",
+                                    "minimum": 1,
+                                    "maximum": 100
+                                }
+                            },
+                            "required": [
+                                "Disk",
+                                "Memory"
+                            ]
+                        }
+                    }
+                },
+                "DatabaseSettings": {
+                    "type": "array",
+                    "description": "数据库监控设置。",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "Name": {
+                                "type": "string",
+                                "description": "名称，唯一值。",
+                                "minLength": 1
+                            },
+                            "ConnectionString": {
+                                "type": "string",
+                                "description": "连接字符串。",
+                                "minLength": 1
+                            },
+                            "DbType": {
+                                "description": "数据库类型。",
+                                "enum": [
+                                    "MySQL",
+                                    "SqlServer",
+                                    "Redis",
+                                    "MongoDB"
+                                ]
+                            },
+                            "WarningThreshold": {
+                                "type": "object",
+                                "description": "告警阈值。",
+                                "properties": {
+                                    "Timeout": {
+                                        "type": "number",
+                                        "description": "超时时间，单位毫秒。",
+                                        "minimum": 1,
+                                        "maximum": 2147483647
+                                    }
+                                }
+                            }
+                        },
+                        "required": [
+                            "Name",
+                            "ConnectionString",
+                            "DbType"
+                        ]
+                    }
+                },
+                "PingSettings": {
+                    "type": "array",
+                    "description": "Ping监控设置。",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "Name": {
+                                "type": "string",
+                                "description": "名称，唯一值。",
+                                "minLength": 1
+                            },
+                            "Host": {
+                                "type": "string",
+                                "description": "Host。",
+                                "minLength": 1
+                            },
+                            "WarningThreshold": {
+                                "type": "object",
+                                "description": "告警阈值。",
+                                "properties": {
+                                    "Timeout": {
+                                        "type": "number",
+                                        "description": "超时时间，单位毫秒。",
+                                        "minimum": 1,
+                                        "maximum": 2147483647
+                                    }
+                                }
+                            }
+                        },
+                        "required": [
+                            "Name",
+                            "Host"
+                        ]
+                    }
+                },
+                "TcpSettings": {
+                    "type": "array",
+                    "description": "Tcp监控设置。",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "Name": {
+                                "type": "string",
+                                "description": "名称，唯一值。",
+                                "minLength": 1
+                            },
+                            "Host": {
+                                "type": "string",
+                                "description": "Host。",
+                                "minLength": 1
+                            },
+                            "Port": {
+                                "type": "number",
+                                "description": "端口。",
+                                "minimum": 1,
+                                "maximum": 65535
+                            },
+                            "WarningThreshold": {
+                                "type": "object",
+                                "description": "告警阈值。",
+                                "properties": {
+                                    "Timeout": {
+                                        "type": "number",
+                                        "description": "超时时间，单位毫秒。",
+                                        "minimum": 1,
+                                        "maximum": 2147483647
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Notifications": {
+            "type": "object",
+            "description": "通知配置。",
+            "properties": {
+                "DingTalkRobot": {
+                    "type": "object",
+                    "description": "钉钉机器人通知配置。",
+                    "properties": {
+                        "IsEnabled": {
+                            "type": "boolean",
+                            "description": "是否启用。"
+                        },
+                        "Webhook": {
+                            "type": "string",
+                            "description": "Webhook地址。"
+                        },
+                        "AtMobiles": {
+                            "type": "array",
+                            "description": "被@人的手机号。",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "IsAtAll": {
+                            "type": "boolean",
+                            "description": "是否@所有人。"
+                        }
+                    }
+                }
+            }
+        },
+        "PeriodicReportingWorker": {
+            "type": "object",
+            "description": "定时报告选项。",
+            "properties": {
+                "IsEnabled": {
+                    "type": "boolean",
+                    "description": "是否启用。"
+                },
+                "StartNow": {
+                    "type": "boolean",
+                    "description": "启动时立即执行一次。"
+                },
+                "Cron": {
+                    "type": "string",
+                    "description": "Cron表达式字符串。",
+                    "minLength": 1
+                }
+            }
+        }
+    }
+}
