@@ -32,8 +32,8 @@ public class WinterMonitorOptions
     /// <summary>
     /// 轮询间隔。
     /// </summary>
-    [Range(10, int.MaxValue)]
-    public int PollingIntervalInSeconds { get; set; } = 10;
+    [Range(5, int.MaxValue)]
+    public int PollingIntervalInSeconds { get; set; } = 5;
 
     /// <summary>
     /// 告警设置。

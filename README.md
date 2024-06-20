@@ -99,13 +99,13 @@ sudo ./Winter.Monitor logs filter="key words" // 控制台输出服务的日志
 {
     "Monitor": {
         "ServerName": "",
-    	"PollingIntervalInSeconds": 10
+    	"PollingIntervalInSeconds": 5
     }
 }
 ```
 
 - ServerName  : 服务器名称，如果为空则显示计算机名称。建议使用 IP+用途，例如：127.0.0.1(DB)。
-- PollingIntervalInSeconds : 轮询间隔，表示收集监控数据的执行间隔（秒），默认值 10。
+- PollingIntervalInSeconds : 轮询间隔，表示收集监控数据的执行间隔（秒），默认值 5。
 
 ##### 告警配置
 
@@ -318,7 +318,7 @@ sudo ./Winter.Monitor logs filter="key words" // 控制台输出服务的日志
   "$schema": "https://raw.githubusercontent.com/applebananamilk/winter.monitor/main/schemas/monitor-schema-v1.0.json",
   "Monitor": {
     "ServerName": "",
-    "PollingIntervalInSeconds": 10,
+    "PollingIntervalInSeconds": 5,
     "AlarmSetting": {
       "RecoveryNotification": {
         "IsEnabled": true
