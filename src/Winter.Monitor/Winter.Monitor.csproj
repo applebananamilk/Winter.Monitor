@@ -10,12 +10,12 @@
 		<Description>简易监控。</Description>
 		<Version>2.0.1</Version>
 		<RepositoryType>git</RepositoryType>
+		<SatelliteResourceLanguages>zh-Hans</SatelliteResourceLanguages>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<PublishTrimmed>True</PublishTrimmed>
 		<TrimMode>partial</TrimMode>
-		<SatelliteResourceLanguages>zh-Hans</SatelliteResourceLanguages>
 		<EnableTrimAnalyzer>false</EnableTrimAnalyzer>
 	</PropertyGroup>
 
@@ -66,10 +66,6 @@
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
-	</ItemGroup>
-
-	<ItemGroup>
-		<TrimmerRootAssembly Include="Winter.Monitor" />
 	</ItemGroup>
 
 </Project>
