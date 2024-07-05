@@ -34,6 +34,7 @@ $version = Get-Current-Version
 
 Set-Location $projectFolder
 
+Write-Info "当前版本 : $version"
 Write-Info "开始进行发布..."
 
 if (Test-Path -path $pulishRootFolder) {
@@ -54,5 +55,7 @@ foreach ($targetRuntime in $targetRuntimes) {
     # 删除发布文件夹
     Remove-Item -path $publishTargetFolder -Recurse -Force
 }
+
+Set-Location $currentFolder
 
 Write-Info "发布结束 :)"
